@@ -14,10 +14,10 @@
                 <v-tabs grow>
                   <v-tabs-slider></v-tabs-slider>
                   <v-tab :href="`#tab-login`">
-                    LOG IN
+                    LOGIN
                   </v-tab>
                   <v-tab :href="`#tab-newUser`">
-                    Nieuwe gebruiker
+                    Registreren
                   </v-tab>
 
                   <v-tab-item :value="'tab-login'" >
@@ -25,22 +25,22 @@
                       <v-container>
                         <v-row class="flex-column">
                           <v-col>
-                            <p class="login-slogan display-2 text-center font-weight-medium my-10">Welkom!</p>
+                            <p class="login-slogan display-1 text-center font-weight-medium my-10">Welcome Back!</p>
                           </v-col>
                           <v-form>
                             <v-col>
                               <v-text-field
                                   v-model="email"
                                   :rules="emailRules"
-                                  value="admin@flatlogic.com"
-                                  label="Email Address"
+                                  value="email"
+                                  label="Email Adres"
                                   required
                               ></v-text-field>
                               <v-text-field
                                   v-model="password"
                                   :rules="passRules"
                                   type="password"
-                                  label="Password"
+                                  label="Wachtwoord"
                                   hint="At least 6 characters"
                                   required
                               ></v-text-field>
@@ -55,7 +55,7 @@
                                   @click="login"
                               >
                                 Login</v-btn>
-                              <v-btn large text class="text-capitalize primary--text">Forget Password</v-btn>
+                              <v-btn large text class="text-capitalize primary--text">Wachtwoord vergeten</v-btn>
                             </v-col>
                           </v-form>
                         </v-row>
@@ -69,53 +69,51 @@
                         <v-row class="flex-column">
 
                           <v-col>
-                            <p class="login-slogan display-2 text-center font-weight-medium mt-10">Welcome!</p>
-                            <p class="login-slogan display-1 text-center font-weight-medium mb-10">Create your account</p>
+                            <p class="login-slogan display-2 text-center font-weight-medium mt-5">Welkom!</p>
+                            <p class="login-slogan display-1 text-center font-weight-medium mb-0">Account Creëren</p>
                           </v-col>
 
                           <v-form>
-                            <v-col>
+                            <v-layout column wrap>
                               <v-text-field
-                                  v-model="createFullName"
-                                  label="Full Name"
+                                  v-model="createCompany"
+                                  label="Bedrijfsnaam"
                                   required
                               ></v-text-field>
                               <v-text-field
                                   v-model="createEmail"
                                   :rules="emailRules"
-                                  label="Email Address"
+                                  label="E-mailadres"
                                   required
                               ></v-text-field>
                               <v-text-field
                                   v-model="createPassword"
                                   :rules="passRules"
                                   type="password"
-                                  label="Password"
+                                  label="Wachtwoord"
                                   hint="At least 6 characters"
                                   required
                               ></v-text-field>
-                            </v-col>
+                              <v-text-field
+                                  v-model="passwordCheck"
+                                  :rules="passRules"
+                                  type="password"
+                                  label="Herhaal wachtwoord"
+                                  required
+                              ></v-text-field>
+                              <div v-if="createPassword !== passwordCheck" class="red--text">Password's don't match!</div>
+                            </v-layout>
                             <v-col class="d-flex justify-space-between">
                               <v-btn
                                   large
                                   block
-                                  :disabled="createFullName.length === 0 || createEmail.length === 0 || createPassword === 0"
+                                  :disabled="createCompany.length === 0 || createEmail.length === 0 || createPassword === 0 || createPassword !== passwordCheck"
                                   color="primary"
-                                  @click="login"
+                                  @click="register"
                               >
-                                Create your account</v-btn>
+                                Account registreren</v-btn>
                             </v-col>
                           </v-form>
-
-                          <v-col cols="12" class="d-flex align-center my-4">
-                            <v-divider></v-divider>
-                            <span class="px-5"> or </span>
-                            <v-divider></v-divider>
-                          </v-col>
-
-                          <v-btn height="45" block color="white" elevation="0" class="google text-capitalize">
-                            <v-img src="@/assets/google.svg" max-width="30" class="mr-4"></v-img>
-                            Sign in with Google</v-btn>
                         </v-row>
                       </v-container>
                     </v-form>
@@ -126,7 +124,7 @@
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
               <v-footer>
-                <div class="primary--text">© VD Compressors, LLC. All rights reserved.</div>
+                <div class="primary--text">© VD Compressors. All rights reserved.</div>
               </v-footer>
             </v-col>
           </v-row>
@@ -137,38 +135,67 @@
 </template>
 
 <script>
-
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+/.test(v) || 'E-mail must be valid',
-        ],
-        createFullName: '',
-        createEmail: '',
-        createPassword: '',
-        password: '',
-        passRules: [
-          v => !!v || 'Password is required',
-          v => v.length >= 6 || 'Min 6 characters'
-        ]
-      }
-    },
-    methods: {
-      login(){
-        window.localStorage.setItem('authenticated', true);
-        this.$router.push('/dashboard');
-      }
-    },
-    created() {
-      if (window.localStorage.getItem('authenticated') === 'true') {
-        this.$router.push('/dashboard');
-      }
+import db from '../firebaseInit'
+import firebase from 'firebase';
+import index from "@/store";
+export default {
+  name: 'Login',
+  data() {
+    return {
+      menu: '',
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      createCompany: '',
+      createEmail: '',
+      createPassword: '',
+      password: '',
+      passwordCheck: '',
+      passRules: [
+        v => !!v || 'Password is required',
+        v => v.length >= 6 || 'Min 6 characters'
+      ]
     }
+  },
+  methods: {
+    login(){
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(user => {
+        window.localStorage.setItem('authenticated', 'true')
+        return db.collection('users').doc(user.user.uid).get().then((userRef)=> {
+          index.state.user = userRef.data()
+          if (userRef.data().isAdmin)
+            this.$router.push('/admin/dashboard');
+          else
+            this.$router.push('/client/dashboard');
+        })
+      })
+    },
+    register: function(e) {
+      e.preventDefault()
+      const newUser = {
+        company: this.createCompany,
+        email: this.createEmail,
+        isAdmin: false
+      }
+      firebase.auth().createUserWithEmailAndPassword(this.createEmail, this.createPassword).then(user => {
+            return db.collection('users').doc(user.user.uid).set(newUser).then(() => {
+              index.state.user = newUser
+              this.$router.push('/client/dashboard');
+            })
+          },
+          err => {
+            alert(err.message)
+          })
+    }
+  },
+  created() {
+    //if (window.localStorage.getItem('authenticated') === 'true') {
+    // this.$router.push('/client/dashboard');
+    //}
   }
+}
 
 
 

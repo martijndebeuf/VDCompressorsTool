@@ -17,54 +17,6 @@
     <v-spacer></v-spacer>
 
     <Search />
-
-    <v-menu
-        offset-y
-        bottom
-        nudge-bottom="10"
-        left
-    >
-        <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                @click="notificationsBadge ? notificationsBadge = !notificationsBadge : ''"
-                v-bind="attrs"
-                v-on="on"
-                style="font-size: 28px"
-                icon
-                class="mr-2"
-            >
-                <v-badge
-                    :value="notificationsBadge"
-                    color="error"
-                    content="4"
-                    overlap
-                >
-                    <v-icon
-                        style="font-size: 28px"
-                        color="rgba(255, 255, 255, 0.35)"
-                    >mdi-bell-outline</v-icon>
-                </v-badge>
-            </v-btn>
-        </template>
-        <v-list>
-            <v-list-item-group color="primary">
-                <v-list-item
-                    v-for="(item, i) in notifications"
-                    :key="i"
-                >
-                    <v-list-item-icon class="mr-4 mb-1">
-                        <v-icon
-                            :color="item.color"
-                            v-text="item.icon"
-                        ></v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                        <v-list-item-title v-text="item.text"></v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list-item-group>
-        </v-list>
-    </v-menu>
     <v-menu
         max-width="280"
         offset-y
@@ -93,8 +45,8 @@
             </v-btn>
         </template>
         <v-list >
-            <div class="text-h5 grey--text text--darken-3 px-4 pt-4">John Smith</div>
-            <div class="subtitle-2 primary--text font-weight-regular px-4">Flatlogic.com</div>
+            <div class="text-h5 grey--text text--darken-3 px-4 pt-4">{{company}}</div>
+          <!-- <div class="subtitle-2 primary--text font-weight-regular px-4"></div> maybe put link to company website here-->
             <v-list-item-group color="primary">
                 <v-list-item
                     v-for="(item, i) in account"
@@ -131,12 +83,14 @@
 import {mapActions, mapState} from 'vuex'
   import config from '../../config';
   import Search from "@/components/Search/Search";
+  import index from "@/store";
 
   export default {
     name: 'Header',
     components: { Search },
     data: () => ({
       config,
+      company: index.state.user.company,
       searchCollapse: true,
       notifications: [
         { text: 'Check out this awesome ticket', icon: 'mdi-tag', color: 'warning' },

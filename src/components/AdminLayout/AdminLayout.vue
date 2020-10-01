@@ -1,7 +1,7 @@
 <template>
     <v-app class="pa-6">
         <Header />
-        <Sidebar />
+        <AdminSidebar />
         <v-main class="content">
             <router-view />
             <Footer />
@@ -11,14 +11,14 @@
 
 <script>
     import Header from '@/components/Header/Header';
-    import Sidebar from '@/components/Sidebar/Sidebar';
+    import AdminSidebar from '@/components/Sidebars/AdminSidebar';
     import Footer from "@/components/Footer/Footer";
-    import './Layout.scss';
+    import './AdminLayout.scss';
 
     export default {
         name: 'Layout',
-        components: {Footer, Header, Sidebar },
+        components: {Footer, Header, AdminSidebar },
     };
 </script>
 
-<style src="./Layout.scss" lang="scss" />
+<style src="./AdminLayout.scss" lang="scss" />
