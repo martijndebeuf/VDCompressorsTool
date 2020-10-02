@@ -13,6 +13,7 @@ import Error from "@/pages/Error/Error";
 import Login from "@/pages/Login/Login";
 import ClientCalendar from "@/pages/Calendars/ClientCalendar"
 import AdminCalendar from "@/pages/Calendars/AdminCalendar";
+import Profile from "@/pages/Profile/Profile"
 
 Vue.use(Router);
 
@@ -48,6 +49,11 @@ export default new Router({
         path: 'notifications',
         name: 'Notifications',
         component: Notifications
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: Profile
       },
     ],
   },{

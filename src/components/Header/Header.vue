@@ -51,6 +51,8 @@
                 <v-list-item
                     v-for="(item, i) in account"
                     :key="i"
+                    :to="item.link === '#' ? '' : item.link"
+                    link
                 >
                     <v-list-item-icon class="mr-4">
                         <v-icon
@@ -105,9 +107,9 @@ import {mapActions, mapState} from 'vuex'
         { text: 'LD', name: 'Liana Dutti', message: 'Good news from sale department', time: '14:56', color: 'primary'  },
       ],
       account: [
-        { text: 'Profile', icon: 'mdi-account', color: 'textColor' },
-        { text: 'Tasks', icon: 'mdi-thumb-up', color: 'textColor'  },
-        { text: 'Messages', icon: 'mdi-flag', color: 'textColor'  }
+        { text: 'Profiel', icon: 'mdi-account', color: 'textColor', link: "/client/profile"},
+        { text: 'Taken', icon: 'mdi-thumb-up', color: 'textColor'  },
+        { text: 'Berichten', icon: 'mdi-flag', color: 'textColor'  }
       ],
       notificationsBadge: true,
       messageBadge: true
