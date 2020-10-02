@@ -21,11 +21,11 @@
             <v-col>
               <v-sheet height="64">
                 <v-toolbar flat color="white">
-                  <v-btn color="primary" dark @click.stop="dialog = true">
-                    New Event
+                  <v-btn color="primary" class="mr-4" dark @click.stop="dialog = true">
+                    Onderhoud aanvragen
                   </v-btn>
                   <v-btn outlined class="mr-4" @click="setToday">
-                    Today
+                    Vandaag
                   </v-btn>
                   <v-btn fab text small @click="prev">
                     <v-icon small>mdi-chevron-left</v-icon>
@@ -44,16 +44,16 @@
                     </template>
                     <v-list>
                       <v-list-item @click="type = 'day'">
-                        <v-list-item-title>Day</v-list-item-title>
+                        <v-list-item-title>Dag</v-list-item-title>
                       </v-list-item>
                       <v-list-item @click="type = 'week'">
                         <v-list-item-title>Week</v-list-item-title>
                       </v-list-item>
                       <v-list-item @click="type = 'month'">
-                        <v-list-item-title>Month</v-list-item-title>
+                        <v-list-item-title>Maand</v-list-item-title>
                       </v-list-item>
                       <v-list-item @click="type = '4day'">
-                        <v-list-item-title>4 days</v-list-item-title>
+                        <v-list-item-title>4 Dagen</v-list-item-title>
                       </v-list-item>
                     </v-list>
                   </v-menu>
@@ -170,10 +170,10 @@ export default {
     focus: new Date().toISOString().substr(0, 10),
     type: 'month',
     typeToLabel: {
-      month: 'Month',
+      month: 'Maand',
       week: 'Week',
-      day: 'Day',
-      '4day': '4 Days',
+      day: 'Dag',
+      '4day': '4 Dagen',
     },
     name: null,
     details: null,
