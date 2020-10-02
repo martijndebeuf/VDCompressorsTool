@@ -135,9 +135,7 @@
 </template>
 
 <script>
-import db from '../firebaseInit'
-import firebase from 'firebase';
-import index from "@/store";
+
 export default {
   name: 'Login',
   data() {
@@ -161,33 +159,21 @@ export default {
   },
   methods: {
     login(){
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(user => {
-        window.localStorage.setItem('authenticated', 'true')
-        return db.collection('users').doc(user.user.uid).get().then((userRef)=> {
-          index.state.user = userRef.data()
-          if (userRef.data().isAdmin)
-            this.$router.push('/admin/dashboard');
-          else
-            this.$router.push('/client/dashboard');
-        })
-      })
+      const user = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('loginUser', user)
     },
-    register: function(e) {
+    register(e) {
       e.preventDefault()
       const newUser = {
         company: this.createCompany,
         email: this.createEmail,
+        password: this.createPassword,
         isAdmin: false
       }
-      firebase.auth().createUserWithEmailAndPassword(this.createEmail, this.createPassword).then(user => {
-            return db.collection('users').doc(user.user.uid).set(newUser).then(() => {
-              index.state.user = newUser
-              this.$router.push('/client/dashboard');
-            })
-          },
-          err => {
-            alert(err.message)
-          })
+      this.$store.dispatch('registerUser', newUser)
     }
   },
   created() {
