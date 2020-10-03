@@ -44,9 +44,8 @@ export default {
 
     ],
     links: [
-      {text: 'Flatlogic', link: 'https://flatlogic.com/'},
-      {text: 'About Us', link: 'https://flatlogic.com/about'},
-      {text: 'Blog', link: 'https://flatlogic.com/blog'},
+      {text: 'VD Compressors', link: 'https://vdcompressors.be/'},
+      {text: 'About Us', link: 'https://vdcompressors.be/over-ons/'},
     ]
   }),
 }

@@ -9,7 +9,9 @@ export default  {
         firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(cred => {
             window.localStorage.setItem('authenticated', 'true')
             return db.collection('users').doc(cred.user.uid).get().then((userRef)=> {
-                commit('SET_USER', userRef.data());
+                let userData = userRef.data()
+                userData.uid = cred.user.uid
+                commit('SET_USER', userData);
             })
         })
     },
@@ -24,5 +26,18 @@ export default  {
             err => {
                 alert(err.message)
             })
+    },
+    loadClients({commit}, state) {
+        let clients = [];
+        db.collection('users').get().then(query => {
+            query.forEach(doc => {
+                if(doc.id !== state.user.uid) {
+                    let userData = doc.data()
+                    userData.id = doc.id
+                    clients.push(userData)
+                }
+            })
+            commit('SET_CLIENTS', clients)
+        })
     }
 }

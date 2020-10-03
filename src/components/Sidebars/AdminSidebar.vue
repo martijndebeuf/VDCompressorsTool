@@ -18,12 +18,12 @@
             align="center"
         >
           <v-col cols="6">
-                      <span
-                          style="padding-left: 32px"
-                          class="text-body-1 subheader"
-                          :class="(item.heading && DRAWER_STATE) ? 'show ' : 'hide'">
-                          {{ item.heading }}
-                      </span>
+            <span
+                style="padding-left: 32px"
+                class="text-body-1 subheader"
+                :class="(item.heading && DRAWER_STATE) ? 'show ' : 'hide'">
+                {{ item.heading }}
+            </span>
           </v-col>
           <v-col
               cols="6"
@@ -113,11 +113,12 @@ export default {
         { title: 'Favorieten', icon: 'mdi-star', link: '/admin/favourites' },
         { title: 'Kalender', icon: 'mdi-calendar', link: '/admin/calendar' },
         {
-          title: 'Financial Data',
+          title: 'Data',
           icon: 'mdi-image-filter-none',
           model: false,
           children: [
-            { title: 'Tabellen', icon: 'mdi-grid-large', link: '/admin/tables' },
+            { title: 'Klanten', icon: 'mdi-account-box-multiple', link: '/admin/clients'},
+            { title: 'Tabellen', icon: 'mdi-grid-large', link: '/admin/tables'},
             { title: 'Reports', icon: 'mdi-circle-small', link: '/reports'},
             { title: 'Charts', icon: 'mdi-circle-small', link: '/charts'},
           ],

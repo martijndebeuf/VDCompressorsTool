@@ -177,9 +177,13 @@ export default {
     }
   },
   created() {
-    //if (window.localStorage.getItem('authenticated') === 'true') {
-    // this.$router.push('/client/dashboard');
-    //}
+    if (window.localStorage.getItem('authenticated') === 'true') {
+      if(this.$store.state.user.isAdmin) {
+        this.$router.push('/admin/dashboard');
+      } else {
+        this.$router.push('/client/dashboard');
+      }
+    }
   }
 }
 

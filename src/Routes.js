@@ -14,6 +14,7 @@ import Login from "@/pages/Login/Login";
 import ClientCalendar from "@/pages/Calendars/ClientCalendar"
 import AdminCalendar from "@/pages/Calendars/AdminCalendar";
 import Profile from "@/pages/Profile/Profile"
+import Clients from "@/pages/Tables/Clients"
 
 Vue.use(Router);
 
@@ -81,6 +82,11 @@ export default new Router({
           path: 'calendar',
           name: 'Calendar',
           component: AdminCalendar
+        },
+        {
+          path: 'clients',
+          name: 'Clients',
+          component: Clients
         },
         {
           path: 'charts',
