@@ -11,7 +11,8 @@ export default {
         else
             routes.push('/client/dashboard');
     },
-    SET_CLIENTS(state, users) {
-        state.clients = users
+    SET_CLIENTS(state, clientsByName, clientsById) {
+        state.clientsByName = clientsByName;
+        state.clientsById = clientsById
     }
 }

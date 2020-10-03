@@ -3,5 +3,6 @@ export default {
         return state.drawer;
     },
     user: state => state.user,
-    token: state => state.token
+    token: state => state.token,
+    clientsByName: state => state.clientsByName,
 }

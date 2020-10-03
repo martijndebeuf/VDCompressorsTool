@@ -28,16 +28,18 @@ export default  {
             })
     },
     loadClients({commit}, state) {
-        let clients = [];
+        let clientsByName = {};
+        let clientsById = {};
         db.collection('users').get().then(query => {
             query.forEach(doc => {
                 if(doc.id !== state.user.uid) {
                     let userData = doc.data()
                     userData.id = doc.id
-                    clients.push(userData)
+                    clientsByName[userData.company] = userData
+                    clientsById[doc.id] = userData
                 }
             })
-            commit('SET_CLIENTS', clients)
+            commit('SET_CLIENTS', clientsByName, clientsById)
         })
     }
 }

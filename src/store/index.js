@@ -14,7 +14,8 @@ export default new Vuex.Store({
   state: {
     drawer: true,
     user: {},
-    clients: []
+    clientsByName: {},
+    clientsById: {}
   },
   plugins: [createPersistedState({
     storage: {

@@ -60,37 +60,167 @@
                 </v-toolbar>
               </v-sheet>
 
-              <v-dialog v-model="dialog" max-width="500">
+              <v-dialog v-model="dialog" max-width="600">
                 <v-card>
-                  <v-container>
-                    <v-form @submit.prevent="addEvent">
-                      <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
-                      <v-text-field v-model="details" type="text" label="detail"></v-text-field>
-                      <v-text-field v-model="start" type="date" label="start (required)"></v-text-field>
-                      <v-text-field v-model="end" type="date" label="end (required)"></v-text-field>
-                      <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
-                      <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
-                        create event
-                      </v-btn>
-                    </v-form>
-                  </v-container>
+                  <v-card-title>
+                    <span class="headline">Onderhoud aanvragen</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal first name*"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal middle name"
+                              hint="example of helper text only on focus"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal last name*"
+                              hint="example of persistent helper text"
+                              persistent-hint
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              label="Email*"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              label="Password*"
+                              type="password"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                          <v-select
+                              :items="['0-17', '18-29', '30-54', '54+']"
+                              label="Age*"
+                              required
+                          ></v-select>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                          <v-autocomplete
+                              :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                              label="Interests"
+                              multiple
+                          ></v-autocomplete>
+                        </v-col>
+                        <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
+                          create event
+                        </v-btn>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
                 </v-card>
               </v-dialog>
 
-              <v-dialog v-model="dialogDate" max-width="500">
+              <v-dialog v-model="dialogDate" max-width="600">
                 <v-card>
-                  <v-container>
-                    <v-form @submit.prevent="addEvent">
-                      <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
-                      <v-text-field v-model="details" type="text" label="detail"></v-text-field>
-                      <v-text-field v-model="start" type="date" label="start (required)"></v-text-field>
-                      <v-text-field v-model="end" type="date" label="end (required)"></v-text-field>
-                      <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
-                      <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
-                        create event
-                      </v-btn>
-                    </v-form>
-                  </v-container>
+                  <v-card-title>
+                    <span class="headline">Onderhoud aanvragen</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal first name*"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal middle name"
+                              hint="example of helper text only on focus"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="4"
+                        >
+                          <v-text-field
+                              label="Legal last name*"
+                              hint="example of persistent helper text"
+                              persistent-hint
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              label="Email*"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                              label="Password*"
+                              type="password"
+                              required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                          <v-select
+                              :items="['0-17', '18-29', '30-54', '54+']"
+                              label="Age*"
+                              required
+                          ></v-select>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                          <v-autocomplete
+                              :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                              label="Interests"
+                              multiple
+                          ></v-autocomplete>
+                        </v-col>
+                        <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
+                          create event
+                        </v-btn>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
                 </v-card>
               </v-dialog>
 
