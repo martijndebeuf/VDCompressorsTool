@@ -27,12 +27,12 @@ export default  {
                 alert(err.message)
             })
     },
-    loadClients({commit}, state) {
+    loadClients({commit}, currUserId) {
         let clientsByName = {};
         let clientsById = {};
         db.collection('users').get().then(query => {
             query.forEach(doc => {
-                if(doc.id !== state.user.uid) {
+                if(doc.id !== currUserId) {
                     let userData = doc.data()
                     userData.id = doc.id
                     clientsByName[userData.company] = userData
@@ -41,5 +41,16 @@ export default  {
             })
             commit('SET_CLIENTS', clientsByName, clientsById)
         })
-    }
+    },
+    loadServiceDates({commit}) {
+        let dates = []
+        db.collection('serviceDates').get().then(query => {
+            query.forEach(doc => {
+                let eventData = doc.data()
+                eventData.id = doc.id
+                dates.push(eventData)
+            })
+            commit('SET_SERVICE_DATES', dates)
+        })
+    },
 }

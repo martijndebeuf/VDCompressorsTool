@@ -215,9 +215,6 @@ export default {
     dialog: false,
     dialogDate: false
   }),
-  mounted () {
-    this.getEvents()
-  },
   computed: {
     title () {
       const { start, end } = this
@@ -250,17 +247,6 @@ export default {
     }
   },
   methods: {
-    async getEvents () {
-      let snapshot = await db.collection('serviceDates').get()
-      const events = []
-      snapshot.forEach(doc => {
-        let appData = doc.data()
-        appData.id = doc.id
-        events.push(appData)
-        console.log("serviceDate", appData)
-      })
-      this.events = events
-    },
     setDialogDate( { date }) {
       this.dialogDate = true
       this.focus = date
@@ -285,18 +271,20 @@ export default {
       if (this.company && this.serviceDate && this.tasks) {
         //add to general servicedates database.
         const userId =  this.clients[this.company].id
+        const date = new Date(this.serviceDate)
         await db.collection("serviceDates").add({
           company: this.company,
           uid: userId,
           tasks: this.tasks,
-          start: this.serviceDate,
-          end: this.serviceDate,
+          startStamp: date.getTime(),
+          endStamp: date.getTime(),
           color: this.color
         })
         //await db.collection("users").doc(userId).update({
           //serviceDates: firebase.firestore.FieldValue.arrayUnion(this.serviceDate)
         //});
-        await this.getEvents()
+        await this.loadServiceDates()
+        this.events = this.getServiceDates()
         this.company = null
         this.tasks = null
         this.serviceDate = null
@@ -318,7 +306,8 @@ export default {
     async deleteEvent (ev) {
       await db.collection("calEvent").doc(ev).delete()
       this.selectedOpen = false
-          await this.getEvents()
+          await this.loadServiceDates()
+          this.events = this.getServiceDates()
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {
@@ -344,17 +333,26 @@ export default {
           : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
     },
     loadClients() {
-      this.$store.dispatch('loadClients', this.$store.state)
+      const currUserId = this.$store.state.user.uid
+      this.$store.dispatch('loadClients', currUserId)
     },
     getClients() {
       return this.$store.getters.clientsByName
+    },
+    loadServiceDates() {
+      this.$store.dispatch('loadServiceDates')
+    },
+    getServiceDates() {
+      return this.$store.getters.serviceDates
     }
   },
   created() {
     this.clients = this.getClients()
+    this.events = this.getServiceDates()
   },
   beforeMount() {
     this.loadClients()
+    this.loadServiceDates()
   }
 }
 </script>

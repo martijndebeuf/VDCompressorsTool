@@ -14,5 +14,8 @@ export default {
     SET_CLIENTS(state, clientsByName, clientsById) {
         state.clientsByName = clientsByName;
         state.clientsById = clientsById
+    },
+    SET_SERVICE_DATES(state, dates) {
+        state.serviceDates = dates;
     }
 }
